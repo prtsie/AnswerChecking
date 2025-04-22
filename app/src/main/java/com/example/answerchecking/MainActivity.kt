@@ -49,6 +49,7 @@ var responseTimes: MutableState<List<Long>>? = null
 var lastUserAnswerIsCorrect = false
 var currentAnswerCorrect = false
 var colorSaturation = 0.85f
+var threadCounter = 0
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -122,7 +123,9 @@ fun Greeting() {
 
     fun coloredOutput() {
         coroutineScope.launch {
+            var index = ++threadCounter
             while (colorSaturation < 1.0f) {
+                if (index < threadCounter) break
                 if (lastUserAnswerIsCorrect) {
                     backColor!!.value = Color.White.copy(red = colorSaturation, blue = colorSaturation)
                 } else {
